@@ -123,6 +123,8 @@ dependencies {
     // Lombok
     testAnnotationProcessor "org.projectlombok:lombok:${project.ext.lombokVersion}"
     testCompileOnly "org.projectlombok:lombok:${project.ext.lombokVersion}"
+    testImplementation 'org.apache.commons:commons-lang3:3.12.0'
+
 }
 
 tasks.withType(JavaCompile).configureEach {
