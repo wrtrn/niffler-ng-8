@@ -6,9 +6,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.support.AnnotationSupport;
 
-public class CategoryExtension implements BeforeEachCallback, ParameterResolver {
+public class CategoryExtension implements BeforeEachCallback, ParameterResolver, AfterTestExecutionCallback {
 
-    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CreateSpendingExtension.class);
+    public static final ExtensionContext.Namespace NAMESPACE = ExtensionContext.Namespace.create(CategoryExtension.class);
     private final SpendApiClient spendApiClient = new SpendApiClient();
 
     @Override
@@ -47,5 +47,25 @@ public class CategoryExtension implements BeforeEachCallback, ParameterResolver 
     @Override
     public CategoryJson resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
         return extensionContext.getStore(NAMESPACE).get(extensionContext.getUniqueId(), CategoryJson.class);
+    }
+
+    @Override
+    public void afterTestExecution(ExtensionContext context) throws Exception {
+
+        AnnotationSupport.findAnnotation(context.getRequiredTestMethod(), Category.class)
+                .ifPresent(anno -> {
+                    CategoryJson category =
+                            context.getStore(NAMESPACE).get(context.getUniqueId(),
+                                    CategoryJson.class);
+                    if (!category.archived()) {
+                        CategoryJson updatedCategory = new CategoryJson(
+                                category.id(),
+                                category.name(),
+                                category.username(),
+                                true
+                        );
+                        spendApiClient.updateCategory(updatedCategory);
+                    }
+                });
     }
 }
