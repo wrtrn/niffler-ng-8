@@ -25,7 +25,7 @@ public interface SpendApi {
     Call<List<SpendJson>> getAllSpends(@Query("filterPeriod") DataFilterValues period, @Query("filterCurrency") CurrencyValues cur);
 
     @DELETE("internal/spends/remove")
-    Call<Void> removeSpend(@Query("ids") List<Strings> ids);
+    Call<Void> removeSpend(@Query("username") String username, @Query("ids") List<Strings> ids);
 
     @POST("internal/categories/add")
     Call<CategoryJson> addCategory(@Body CategoryJson category);
@@ -34,6 +34,6 @@ public interface SpendApi {
     Call<CategoryJson> updateCategory(@Body CategoryJson category);
 
     @GET("internal/categories/all")
-    Call<List<CategoryJson>> getAllCategories(@Query("excludeArchived") boolean excludeArchived);
+    Call<List<CategoryJson>> getAllCategories(@Query("username") String username, @Query("excludeArchived") boolean excludeArchived);
 
 }

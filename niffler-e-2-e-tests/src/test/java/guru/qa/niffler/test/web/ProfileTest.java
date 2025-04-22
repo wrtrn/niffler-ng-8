@@ -6,6 +6,7 @@ import guru.qa.niffler.jupiter.Category;
 import guru.qa.niffler.model.CategoryJson;
 import guru.qa.niffler.page.HeaderComponent;
 import guru.qa.niffler.page.LoginPage;
+import guru.qa.niffler.page.MainPage;
 import org.junit.jupiter.api.Test;
 
 public class ProfileTest {
@@ -22,7 +23,8 @@ public class ProfileTest {
         Selenide.open(CFG.frontUrl(), LoginPage.class)
                 .doLogin("duck", "12345");
 
-        new HeaderComponent()
+        new MainPage()
+                .getHeader()
                 .openProfile()
                 .checkThatCategoryIsNotInList(category.name())
                 .clickArchivedSwitcher()

@@ -14,6 +14,10 @@ public class MainPage {
     private final SelenideElement historyOfSpendingsElement = $("#spendings");
     private final SelenideElement statisticsElement = $("#stat");
 
+    public HeaderComponent getHeader() {
+        return new HeaderComponent();
+    }
+
     public EditSpendingPage editSpending(String spendingDescription) {
         tableRows.find(text(spendingDescription))
                 .$$("td")

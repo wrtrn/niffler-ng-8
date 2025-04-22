@@ -81,11 +81,11 @@ public class SpendApiClient {
         return response.body();
     }
 
-    public void removeSpend(List<Strings> ids) {
+    public void removeSpend(String username, List<Strings> ids) {
         Response<Void> response;
         try {
             response = spendApi
-                    .removeSpend(ids)
+                    .removeSpend(username, ids)
                     .execute();
         } catch (IOException e) {
             throw new AssertionError(e);
@@ -119,11 +119,11 @@ public class SpendApiClient {
         return response.body();
     }
 
-    public List<CategoryJson> getAllCategories(boolean excludeArchived) {
+    public List<CategoryJson> getAllCategories(String username, boolean excludeArchived) {
         Response<List<CategoryJson>> response;
         try {
             response = spendApi
-                    .getAllCategories(excludeArchived)
+                    .getAllCategories(username, excludeArchived)
                     .execute();
         } catch (IOException e) {
             throw new AssertionError(e);
