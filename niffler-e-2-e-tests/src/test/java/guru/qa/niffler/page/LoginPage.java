@@ -27,7 +27,7 @@ public class LoginPage {
     }
 
     public void checkThatCredentialsInvalid() {
-        formError.shouldHave(text("Неверные учетные данные пользователя"));
+        formError.shouldHave(text("Bad credentials"));
         header.shouldHave(text("Log in"));
     }
 }
